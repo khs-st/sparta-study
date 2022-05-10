@@ -1,10 +1,12 @@
 package com.sparta.week02.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor // 기본생성자를 대신 생성해줍니다.
+@Getter //Lombok이 Getter 사용하게 해줌
+@NoArgsConstructor // Lombok이 기본생성자를 대신 생성해줍니다.
 @Entity // 테이블임을 나타냅니다.
 public class Course {
 
@@ -17,18 +19,6 @@ public class Course {
 
     @Column(nullable = false)
     private String tutor;
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public String getTutor() {
-        return this.tutor;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
 
     public Course(String title, String tutor) {
         this.title = title;
