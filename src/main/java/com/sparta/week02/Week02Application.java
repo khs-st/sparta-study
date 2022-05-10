@@ -17,7 +17,6 @@ import java.util.List;
 public class Week02Application {
 
     public static void main(String[] args) {
-
         SpringApplication.run(Week02Application.class, args);
     }
 
@@ -44,9 +43,6 @@ public class Week02Application {
                 System.out.println(course.getTitle());
                 System.out.println(course.getTutor());
             }
-
-            courseRepository.deleteAll();
         };
     }
-
 }
