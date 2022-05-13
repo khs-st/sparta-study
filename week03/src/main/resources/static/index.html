@@ -373,7 +373,15 @@
         // 메모를 삭제합니다.
         function deleteOne(id) {
             // 1. DELETE /api/memos/{id} 에 요청해서 메모를 삭제합니다.
-
+            $.ajax({
+                type : "DELETE",
+                url: `/api/memos/${id}`,
+                contentType: 'application/json',
+                success: function (){
+                    alert('삭제완료');
+                    getMessages();
+                }
+            });
         }
     </script>
 </head>
