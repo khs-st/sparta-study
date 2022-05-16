@@ -1,9 +1,12 @@
 package com.sparta.week04.models;
 
+import com.sparta.week04.dto.request.ProductsMypriceRequestDto;
+import com.sparta.week04.dto.request.ProductsRequsetDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
@@ -30,4 +33,18 @@ public class Products extends Timestamped {
 
     @Column(nullable = false)
     private int myprice;
+
+    // 관심 상품 생성 시 이용
+    public Products(ProductsRequsetDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.image = requestDto.getImage();
+        this.link = requestDto.getLink();
+        this.lprice = requestDto.getLprice();
+        this.myprice = 0;
+    }
+
+    // 관심 가격 변경 시 이용
+    public void update(ProductsMypriceRequestDto requestDto) {
+        this.myprice = requestDto.getMyprice();
+    }
 }
