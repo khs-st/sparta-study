@@ -1,5 +1,6 @@
 package com.sparta.week04.models;
 
+import com.sparta.week04.dto.request.ItemRequestDto;
 import com.sparta.week04.dto.request.ProductsMypriceRequestDto;
 import com.sparta.week04.dto.request.ProductsRequsetDto;
 import lombok.Getter;
@@ -46,5 +47,10 @@ public class Products extends Timestamped {
     // 관심 가격 변경 시 이용
     public void update(ProductsMypriceRequestDto requestDto) {
         this.myprice = requestDto.getMyprice();
+    }
+
+    // 관심 가격 변경 시 이용
+    public void updateByItemRequestDto(ItemRequestDto requestDto) {
+        this.lprice = requestDto.getLprice();
     }
 }
