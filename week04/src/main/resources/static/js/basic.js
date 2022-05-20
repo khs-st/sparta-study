@@ -125,13 +125,42 @@ function showProduct() {
      * 관심상품 HTML 만드는 함수: addProductItem
      */
     // 1. GET /api/products 요청
-    // 2. 관심상품 목록, 검색결과 목록 비우기
-    // 3. for 문마다 관심 상품 HTML 만들어서 관심상품 목록에 붙이기!
+    $.ajax({
+        type: `GET`,
+        url: `/api/products`,
+        success: function (response){
+            // 2. 관심상품 목록, 검색결과 목록 비우기
+            $(`#product-container`).empty();
+            $(`#search-result-box`).empty();
+            // 3. for 문마다 관심 상품 HTML 만들어서 관심상품 목록에 붙이기!
+            for(let i=0; i<response.length; i++){
+                let product =response[i];
+                let tempHtml = addProductItem(product);
+                $(`#product-container`).append(tempHtml);
+            }
+        }
+    })
 }
 
 function addProductItem(product) {
     // link, image, title, lprice, myprice 변수 활용하기
-    return ``;
+    return `<div class="product-card" onclick="window.location.href='${product.link}'">
+            <div class="card-header">
+                <img src="${product.image}"
+                     alt="${product.title}">
+            </div>
+            <div class="card-body">
+                <div class="title">
+                    ${product.title}
+                </div>
+                <div class="lprice">
+                    <span>${numberWithCommas(product.lprice)}</span>원
+                </div>
+                <div class="isgood ${product.lprice <= product.myprice ? '' :'none'}">
+                    최저가
+                </div>
+            </div>
+        </div>`;
 }
 
 function setMyprice() {
@@ -146,5 +175,24 @@ function setMyprice() {
      * 4. 모달을 종료한다. $('#container').removeClass('active');
      * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
      * 6. 창을 새로고침한다. window.location.reload();
+     *
      */
+    let myprice = $(`#myprice`).val();
+
+    if (myprice == '') {
+        alert('올바른 가격을 입력해주세요');
+        return;
+    }
+
+    $.ajax({
+        type: `PUT`,
+        url:`/api/products/${targetId}`,
+        data: JSON.stringify({myprice : myprice}),
+        contentType : `application/json`,
+        success: function(response){
+            $('#container').removeClass('active');
+            alert(`설정완료`);
+            window.location.reload();
+        }
+    })
 }
